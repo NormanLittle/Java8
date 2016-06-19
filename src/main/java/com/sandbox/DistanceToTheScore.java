@@ -11,14 +11,14 @@ public class DistanceToTheScore {
         /*              <Norman>      <Chris>       <Neil>        <Dave>        <Iain>       vs          <result>    */
         Stream.of(aGame(aScore(1, 0), aScore(1, 0), aScore(2, 0), aScore(1, 0), aScore(1, 1)).withResult(aResult(1, 0)),
                   aGame(aScore(1, 1), aScore(0, 1), aScore(2, 0), aScore(0, 1), aScore(1, 1)).withResult(aResult(2, 2)),
-                  aGame(aScore(1, 0), aScore(1, 0), aScore(2, 0), aScore(2, 0), aScore(2, 0)).withResult(aResult(0, 0)),
+                  aGame(aScore(1, 0), aScore(1, 0), aScore(2, 0), aScore(2, 0), aScore(2, 0)).withResult(aResult(3, 0)),
 
-                  aGame(aScore(1, 0), aScore(1, 0), aScore(2, 0), aScore(1, 0), aScore(2, 1)).withResult(aResult(0, 0)),
-                  aGame(aScore(1, 1), aScore(0, 1), aScore(2, 0), aScore(1, 1), aScore(0, 1)).withResult(aResult(0, 0)),
+                  aGame(aScore(1, 0), aScore(1, 0), aScore(2, 0), aScore(1, 0), aScore(2, 1)).withResult(aResult(3, 0)),
+                  aGame(aScore(1, 1), aScore(0, 1), aScore(2, 0), aScore(1, 1), aScore(0, 1)).withResult(aResult(1, 1)),
                   aGame(aScore(1, 0), aScore(1, 1), aScore(2, 0), aScore(2, 0), aScore(2, 0)).withResult(aResult(0, 0)),
 
                   aGame(aScore(1, 2), aScore(0, 1), aScore(2, 0), aScore(0, 1), aScore(1, 1)).withResult(aResult(0, 0)),
-                  aGame(aScore(1, 0), aScore(1, 1), aScore(2, 0), aScore(1, 1), aScore(1, 0)).withResult(aResult(0, 0)))
+                  aGame(aScore(1, 0), aScore(1, 1), aScore(2, 0), aScore(1, 1), aScore(1, 0)).withResult(aResult(0, 1)))
               .map(Game::toResult)
               .forEach(System.out::println);
     }
