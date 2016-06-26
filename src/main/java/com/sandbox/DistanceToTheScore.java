@@ -9,10 +9,9 @@ import static java.lang.String.valueOf;
 public class DistanceToTheScore {
     public static void main(String[] args) {
         /*              <Norman>      <Chris>       <Neil>        <Dave>        <Iain>       vs          <result>    */
-        Stream.of(aGame(aScore(1, 0), aScore(1, 1), aScore(2, 0), aScore(1, 0), aScore(0, 0)).withResult(aResult(2, 1)),
-                  aGame(aScore(0, 2), aScore(1, 1), aScore(2, 0), aScore(2, 0), aScore(0, 3)).withResult(aResult(3, 3)),
-                  aGame(aScore(1, 1), aScore(1, 0), aScore(2, 0), aScore(2, 0), aScore(2, 0)).withResult(aResult(0, 1)),
-                  aGame(aScore(0, 1), aScore(0, 1), aScore(2, 0), aScore(0, 2), aScore(0, 2)).withResult(aResult(0, 1)))
+        Stream.of(aGame(aScore(0, 0), aScore(2, 0), aScore(2, 0), aScore(2, 0), aScore(3, 1)).withResult(aResult(2, 1)),
+                  aGame(aScore(1, 0), aScore(2, 0), aScore(2, 0), aScore(2, 0), aScore(2, 0)).withResult(aResult(3, 0)),
+                  aGame(aScore(0, 1), aScore(1, 1), aScore(2, 0), aScore(1, 2), aScore(0, 3)).withResult(aResult(0, 4)))
               .map(Game::toResult)
               .forEach(System.out::println);
     }
@@ -47,7 +46,7 @@ public class DistanceToTheScore {
             } else {
                 distance++;
             }
-            return distance;
+            return distance * 2;
         }
     }
 
