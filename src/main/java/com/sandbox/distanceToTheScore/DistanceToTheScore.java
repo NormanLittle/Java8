@@ -1,4 +1,4 @@
-package com.sandbox;
+package com.sandbox.distanceToTheScore;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -9,7 +9,11 @@ import static java.lang.String.valueOf;
 public class DistanceToTheScore {
     public static void main(String[] args) {
         /*              <Norman>      <Chris>       <Neil>        <Dave>        <Iain>       vs          <result>    */
-        Stream.of(aGame(aScore(0, 0), aScore(2, 3), aScore(0, 3), aScore(0, 2), aScore(1, 2)).withResult(aResult(0, 0)))
+        Stream.of(aGame(aScore(1, 1), aScore(2, 1), aScore(2, 2), aScore(0, 0), aScore(1, 3)).withResult(aResult(0, 0)),
+                  aGame(aScore(0, 0), aScore(0, 1), aScore(1, 1), aScore(0, 0), aScore(1, 0)).withResult(aResult(0, 0)),
+                  aGame(aScore(0, 1), aScore(0, 1), aScore(1, 2), aScore(0, 0), aScore(1, 1)).withResult(aResult(0, 0)),
+                  aGame(aScore(2, 1), aScore(1, 0), aScore(1, 1), aScore(0, 0), aScore(3, 0)).withResult(aResult(1, 1)),
+                  aGame(aScore(1, 0), aScore(1, 0), aScore(2, 0), aScore(0, 0), aScore(3, 0)).withResult(aResult(1, 1)))
               .map(Game::toResult)
               .forEach(System.out::println);
     }
@@ -42,9 +46,9 @@ public class DistanceToTheScore {
                 (lhs == rhs && result.lhs == result.rhs)) {
                 // matched result
             } else {
-                distance++;
+                distance = distance + 2 ;
             }
-            return distance * 5;
+            return distance;
         }
     }
 
