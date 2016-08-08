@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 public class Enums {
     public static void main(String[] args) {
         Stream.of("1", "2", "3")
-              .map(c -> String.format("%s = %s", c, Foo.getInstance(c)))
+              .map(Foo::getInstance)
               .forEach(System.out::println);
 
         Stream.of("IN", "OUT", "ABOUT")
