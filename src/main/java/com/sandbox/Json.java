@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import java.io.IOException;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Optional;
 
 public class Json {
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -20,9 +21,11 @@ public class Json {
                                             "]";
 
     public static void main(String[] args) throws IOException {
-        List<Foo> foos = mapper.readValue(JSON_LIST, mapper.getTypeFactory()
-                                                           .constructCollectionType(List.class, Foo.class));
-        foos.stream().forEach(System.out::println);
+        Optional<List<Foo>> foos = Optional.fromNullable(mapper.readValue(JSON_LIST,
+                                                                          mapper.getTypeFactory().constructCollectionType(List.class, Foo.class)));
+        if (foos.isPresent()) {
+            foos.get().stream().forEach(System.out::println);
+        }
     }
 
     static class Foo {
