@@ -97,7 +97,7 @@ abstract class AbstractIterationFilter<T> implements IterationFilter<T> {
 
     @Override
     public boolean isFiltered(T next) {
-        boolean isFiltered = isValid(next);
+        boolean isFiltered = !isValid(next);
         if (andFilter != null) {
             isFiltered |= andFilter.isFiltered(next);
         }
@@ -110,7 +110,7 @@ class WeekendDayFilter extends AbstractIterationFilter<LocalDate> {
 
     @Override
     public boolean isValid(LocalDate next) {
-        return SATURDAY_AND_SUNDAY
+        return !SATURDAY_AND_SUNDAY
                 .contains(next.getDayOfWeek());
     }
 }
@@ -119,7 +119,7 @@ class MondayFilter extends AbstractIterationFilter<LocalDate> {
 
     @Override
     public boolean isValid(LocalDate next) {
-        return MONDAY == next.getDayOfWeek();
+        return MONDAY != next.getDayOfWeek();
     }
 }
 
