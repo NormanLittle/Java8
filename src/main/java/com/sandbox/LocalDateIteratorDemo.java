@@ -169,13 +169,13 @@ class LocalDateIterator implements Iterator<LocalDate> {
     }
 }
 
-public class LocalDateTimeIteratorDemo {
+public class LocalDateIteratorDemo {
 
     public static void main(String[] args) {
         LocalDate start = LocalDate.now();
         LocalDate end = LocalDate.now().plusDays(10);
 
-        LocalDateIterator localDateTimeIterator =
+        LocalDateIterator localDateIterator =
                 new LocalDateIterator(start)
                         .withIterationConstraint(new FixedEndConstraint(end)
                                                          .or(new MaximumIterationConstraint(5)))
@@ -183,11 +183,11 @@ public class LocalDateTimeIteratorDemo {
                                                      .and(new MondayFilter()));
 
         // Java 8 (convert iterator to stream)
-        StreamSupport.stream(spliteratorUnknownSize(localDateTimeIterator, ORDERED), false)
+        StreamSupport.stream(spliteratorUnknownSize(localDateIterator, ORDERED), false)
                      .forEach(System.out::println);
 
         // Guava (new ArrayList from iterator)
-        newArrayList(localDateTimeIterator)
+        newArrayList(localDateIterator)
                 .forEach(System.out::println);
     }
 }
