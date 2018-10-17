@@ -1,8 +1,8 @@
-package com.sandbox;
+package com.sandbox.interview;
 
 import java.util.regex.Pattern;
 
-public class MaxDemo {
+public class MaxWordInSentenceDemo {
 
     public static void main(String[] args) {
         String sentence = "This is a sentence and I want the length of the largest word please.";

@@ -7,6 +7,7 @@ import static java.lang.Math.abs;
 import static java.lang.String.valueOf;
 
 public class DistanceToTheScore {
+
     public static void main(String[] args) {
         /*              <Norman>      <Chris>       <Neil>        <Dave>        <Iain>       vs          <result>    */
         Stream.of(aGame(aScore(1, 1), aScore(2, 1), aScore(2, 2), aScore(0, 0), aScore(1, 3)).withResult(aResult(0, 0)),
@@ -18,6 +19,10 @@ public class DistanceToTheScore {
               .forEach(System.out::println);
     }
 
+    public static Game aGame(Score... scores) {
+        return new Game(scores);
+    }
+
     private static Score aScore(int lhs, int rhs) {
         return new Score(lhs, rhs);
     }
@@ -26,11 +31,8 @@ public class DistanceToTheScore {
         return aScore(lhs, rhs);
     }
 
-    public static Game aGame(Score... scores) {
-        return new Game(scores);
-    }
-
     private static class Score {
+
         private int lhs;
         private int rhs;
 
@@ -45,14 +47,16 @@ public class DistanceToTheScore {
                 (lhs < rhs && result.lhs < result.rhs) ||
                 (lhs == rhs && result.lhs == result.rhs)) {
                 // matched result
-            } else {
-                distance = distance + 2 ;
+            }
+            else {
+                distance = distance + 2;
             }
             return distance;
         }
     }
 
     private static class Game {
+
         private Stream<Score> scores;
         private Score result;
 

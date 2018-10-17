@@ -2,7 +2,8 @@ package com.sandbox;
 
 import java.util.stream.Stream;
 
-public class Enums {
+public class EnumDemo {
+
     public static void main(String[] args) {
         Stream.of("1", "2", "3")
               .map(Foo::getInstance)
@@ -23,13 +24,15 @@ public class Enums {
         }
 
         public static Foo getInstance(String code) {
-            return Stream.of(values()).filter(v -> v.code.equals(code))
+            return Stream.of(values())
+                         .filter(v -> v.code.equals(code))
                          .findFirst()
                          .orElse(null);
         }
 
         public static Foo getInstanceFromName(String name) {
-            return Stream.of(values()).filter(v -> v.name().equals(name))
+            return Stream.of(values())
+                         .filter(v -> v.name().equals(name))
                          .findFirst()
                          .orElse(null);
         }

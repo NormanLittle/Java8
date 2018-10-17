@@ -1,36 +1,39 @@
-package com.sandbox;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static java.util.Spliterator.ORDERED;
-import static java.util.Spliterators.spliteratorUnknownSize;
-import static org.joda.time.DateTimeConstants.MONDAY;
-import static org.joda.time.DateTimeConstants.SATURDAY;
-import static org.joda.time.DateTimeConstants.SUNDAY;
+package com.sandbox.iterator;
 
 import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.StreamSupport;
-import org.joda.time.LocalDate;
+
 import com.google.common.collect.ImmutableSet;
+import org.joda.time.LocalDate;
+
+import static java.util.Spliterator.ORDERED;
+import static java.util.Spliterators.spliteratorUnknownSize;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static org.joda.time.DateTimeConstants.MONDAY;
+import static org.joda.time.DateTimeConstants.SATURDAY;
+import static org.joda.time.DateTimeConstants.SUNDAY;
 
 interface IterationConstraint<T> {
+
     boolean hasNext(T next);
+
     boolean isValid(T next);
+
     void next();
 }
 
 interface IterationFilter<T> {
+
     boolean isFiltered(T next);
+
     boolean isValid(T next);
 }
 
 abstract class AbstractIterationConstraint<T> implements IterationConstraint<T> {
-    private IterationConstraint<T> orConstraint;
 
-    AbstractIterationConstraint<T> or(IterationConstraint<T> orConstraint) {
-        this.orConstraint = orConstraint;
-        return this;
-    }
+    private IterationConstraint<T> orConstraint;
 
     @Override
     public boolean hasNext(T next) {
@@ -39,6 +42,11 @@ abstract class AbstractIterationConstraint<T> implements IterationConstraint<T> 
             hasNext &= orConstraint.hasNext(next);
         }
         return hasNext;
+    }
+
+    AbstractIterationConstraint<T> or(IterationConstraint<T> orConstraint) {
+        this.orConstraint = orConstraint;
+        return this;
     }
 
     @Override
@@ -50,6 +58,7 @@ abstract class AbstractIterationConstraint<T> implements IterationConstraint<T> 
 }
 
 class FixedEndConstraint extends AbstractIterationConstraint<LocalDate> {
+
     private final LocalDate end;
 
     FixedEndConstraint(LocalDate end) {
@@ -63,6 +72,7 @@ class FixedEndConstraint extends AbstractIterationConstraint<LocalDate> {
 }
 
 class MaximumIterationConstraint extends AbstractIterationConstraint<LocalDate> {
+
     private final int max;
     private int iteration;
 
@@ -72,6 +82,10 @@ class MaximumIterationConstraint extends AbstractIterationConstraint<LocalDate> 
     }
 
     @Override
+    public void next() {
+        super.next();
+        iteration++;
+    }    @Override
     public boolean isValid(LocalDate next) {
         boolean isValid = iteration < max;
         if (!isValid) {
@@ -80,20 +94,12 @@ class MaximumIterationConstraint extends AbstractIterationConstraint<LocalDate> 
         return isValid;
     }
 
-    @Override
-    public void next() {
-        super.next();
-        iteration++;
-    }
+
 }
 
 abstract class AbstractIterationFilter<T> implements IterationFilter<T> {
-    IterationFilter<T> andFilter;
 
-    AbstractIterationFilter<T> and(IterationFilter<T> andFilter) {
-        this.andFilter = andFilter;
-        return this;
-    }
+    IterationFilter<T> andFilter;
 
     @Override
     public boolean isFiltered(T next) {
@@ -103,9 +109,15 @@ abstract class AbstractIterationFilter<T> implements IterationFilter<T> {
         }
         return isFiltered;
     }
+
+    AbstractIterationFilter<T> and(IterationFilter<T> andFilter) {
+        this.andFilter = andFilter;
+        return this;
+    }
 }
 
 class WeekendDayFilter extends AbstractIterationFilter<LocalDate> {
+
     private static final Set<Integer> SATURDAY_AND_SUNDAY = ImmutableSet.of(SATURDAY, SUNDAY);
 
     @Override
@@ -135,21 +147,12 @@ class LocalDateIterator implements Iterator<LocalDate> {
         this.start = this.next = start;
     }
 
-    LocalDateIterator withIterationConstraint(IterationConstraint<LocalDate> iterationConstraint) {
-        this.iterationConstraint = iterationConstraint;
-        return this;
-    }
-
-    LocalDateIterator withIterationFilter(IterationFilter<LocalDate> iterationFilter) {
-        this.iterationFilter = iterationFilter;
-        return this;
-    }
-
     @Override
     public boolean hasNext() {
         do {
             increment();
-        } while (iterationFilter.isFiltered(next));
+        }
+        while (iterationFilter.isFiltered(next));
 
         boolean hasNext = iterationConstraint.hasNext(next);
         if (!hasNext) {
@@ -162,6 +165,16 @@ class LocalDateIterator implements Iterator<LocalDate> {
     public LocalDate next() {
         iterationConstraint.next();
         return next;
+    }
+
+    LocalDateIterator withIterationConstraint(IterationConstraint<LocalDate> iterationConstraint) {
+        this.iterationConstraint = iterationConstraint;
+        return this;
+    }
+
+    LocalDateIterator withIterationFilter(IterationFilter<LocalDate> iterationFilter) {
+        this.iterationFilter = iterationFilter;
+        return this;
     }
 
     private void increment() {

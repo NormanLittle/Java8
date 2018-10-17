@@ -1,14 +1,14 @@
 package com.sandbox;
 
-import static java.math.BigDecimal.ROUND_HALF_EVEN;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BigDecimalParser {
+import static java.math.BigDecimal.ROUND_HALF_EVEN;
+
+public class BigDecimalDemo {
 
     private static Function<String, BigDecimal> toBigDecimal = s ->
             new BigDecimal(s)

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class SpringPropertyTest {
+public class SpringPropertyDemo {
 
     @Autowired
     private SpringBean springBean;

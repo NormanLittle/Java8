@@ -1,14 +1,17 @@
 package com.sandbox;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static java.util.stream.Collectors.joining;
-
-import java.util.List;
 import javax.annotation.Nullable;
+import java.util.List;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
 
-public class OrderedList {
+import static java.util.stream.Collectors.joining;
+
+import static com.google.common.collect.Lists.newArrayList;
+
+public class OrderedListDemo {
+
     static final Function<String, Integer> noneIsLast = new Function<String, Integer>() {
         @Nullable
         @Override

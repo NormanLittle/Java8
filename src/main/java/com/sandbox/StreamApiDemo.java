@@ -1,14 +1,15 @@
 package com.sandbox;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+
+import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
+
 import static com.google.common.base.Splitter.on;
 import static com.google.common.collect.Iterables.getFirst;
 
-import java.util.Objects;
-import java.util.stream.Stream;
-import org.apache.commons.lang3.StringUtils;
-import com.google.common.base.Strings;
-
-public class Streams {
+public class StreamApiDemo {
 
     public static void main(String[] args) {
         // filter null.

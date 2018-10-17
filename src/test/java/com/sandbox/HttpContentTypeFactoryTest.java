@@ -15,7 +15,7 @@ public class HttpContentTypeFactoryTest {
     private static final String PNG = "image.png";
     private static final String GIF = "image.gif";
 
-    private HttpMediaTypeFactory testee = new HttpMediaTypeFactory();
+    private MediaTypeDemo testee = new MediaTypeDemo();
 
     @Test
     public void testJpeg() throws IOException {

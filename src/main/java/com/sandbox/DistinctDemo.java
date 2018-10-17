@@ -8,26 +8,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
-import static com.sandbox.TimeSlot.aTimeSlot;
-
-class TimeSlot {
-
-    private final LocalDateTime start;
-    private final LocalDateTime end;
-
-    private TimeSlot(LocalDateTime start, LocalDateTime end) {
-        this.start = start;
-        this.end = end;
-    }
-
-    static TimeSlot aTimeSlot(LocalDateTime start, LocalDateTime end) {
-        return new TimeSlot(start, end);
-    }
-
-    LocalDate getDate() {
-        return start.toLocalDate();
-    }
-}
+import static com.sandbox.DistinctDemo.TimeSlot.aTimeSlot;
 
 public class DistinctDemo {
 
@@ -59,5 +40,24 @@ public class DistinctDemo {
 
     private static LocalDateTime anEndDateTimeFor(LocalDate date) {
         return date.toLocalDateTime(new LocalTime(17, 0));
+    }
+
+    static class TimeSlot {
+
+        private final LocalDateTime start;
+        private final LocalDateTime end;
+
+        private TimeSlot(LocalDateTime start, LocalDateTime end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        static TimeSlot aTimeSlot(LocalDateTime start, LocalDateTime end) {
+            return new TimeSlot(start, end);
+        }
+
+        LocalDate getDate() {
+            return start.toLocalDate();
+        }
     }
 }
