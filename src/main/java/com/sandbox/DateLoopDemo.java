@@ -11,7 +11,7 @@ public class DateLoopDemo {
 
     public static void main(String[] args) {
         LocalDate start = LocalDate.now();
-        LocalDate end = start.plusDays(12);
+        LocalDate end = start.plusDays(90);
 
         System.out.printf("Start: %s; End: %s.%n", start, end);
         for (LocalDate searchStart = start, searchEnd = minimumOf(end, start.plusDays(30));
