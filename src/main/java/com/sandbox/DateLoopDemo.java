@@ -5,14 +5,18 @@ import org.joda.time.LocalDate;
 
 public class DateLoopDemo {
 
+    private static LocalDate minimumOf(LocalDate lhs, LocalDate rhs) {
+        return Ordering.natural().min(lhs, rhs);
+    }
+
     public static void main(String[] args) {
         LocalDate start = LocalDate.now();
-        LocalDate end = start.plusDays(90);
+        LocalDate end = start.plusDays(12);
 
         System.out.printf("Start: %s; End: %s.%n", start, end);
-        for (LocalDate searchStart = start, searchEnd = start.plusDays(30);
+        for (LocalDate searchStart = start, searchEnd = minimumOf(end, start.plusDays(30));
              searchStart.isBefore(end);
-             searchStart = searchEnd.plusDays(1), searchEnd = Ordering.natural().min(end, searchStart.plusDays(30))) {
+             searchStart = searchEnd.plusDays(1), searchEnd = minimumOf(end, searchStart.plusDays(30))) {
             System.out.printf("-> Searching %s to %s.%n", searchStart, searchEnd);
         }
     }
