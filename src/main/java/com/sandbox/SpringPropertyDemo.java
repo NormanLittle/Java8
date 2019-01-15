@@ -1,5 +1,6 @@
 package com.sandbox;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -28,10 +30,12 @@ public class SpringPropertyDemo {
     @Test
     public void testValue() {
         Map<String, String> valueMap = springBean.getValueMap();
-
         assertEquals(" ", valueMap.get("gb"));
         assertEquals(",", valueMap.get("es"));
         assertNull(valueMap.get("other"));
+
+        List<String> valueList = springBean.getValueList();
+        assertEquals(newArrayList("one", "two", "three"), valueList);
     }
 
     @SuppressWarnings("unused")
@@ -51,14 +55,21 @@ public class SpringPropertyDemo {
     static class SpringBean {
 
         private final Map<String, String> valueMap;
+        private final List<String> valueList;
 
         @Autowired
-        public SpringBean(@Value("#{${property.valueMap}}") Map<String, String> valueMap) {
+        public SpringBean(@Value("#{${property.valueMap}}") Map<String, String> valueMap,
+                          @Value("#{'${property.list}'.split(',')}") List<String> valueList) {
             this.valueMap = valueMap;
+            this.valueList = valueList;
         }
 
         Map<String, String> getValueMap() {
             return valueMap;
+        }
+
+        List<String> getValueList() {
+            return valueList;
         }
     }
 }
