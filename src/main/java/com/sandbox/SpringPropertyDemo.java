@@ -1,8 +1,6 @@
 package com.sandbox;
 
-import java.util.List;
-import java.util.Map;
-
+import org.joda.time.LocalTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.junit.Assert.assertEquals;
@@ -36,6 +37,9 @@ public class SpringPropertyDemo {
 
         List<String> valueList = springBean.getValueList();
         assertEquals(newArrayList("one", "two", "three"), valueList);
+
+        LocalTime valueTime = springBean.getValueTime();
+        assertEquals(new LocalTime(8, 0), valueTime);
     }
 
     @SuppressWarnings("unused")
@@ -56,12 +60,15 @@ public class SpringPropertyDemo {
 
         private final Map<String, String> valueMap;
         private final List<String> valueList;
+        private final LocalTime valueTime;
 
         @Autowired
         public SpringBean(@Value("#{${property.valueMap}}") Map<String, String> valueMap,
-                          @Value("#{'${property.list}'.split(',')}") List<String> valueList) {
+                          @Value("#{'${property.list}'.split(',')}") List<String> valueList,
+                          @Value("#{T(org.joda.time.LocalTime).parse('${property.time}')}") LocalTime valueTime) {
             this.valueMap = valueMap;
             this.valueList = valueList;
+            this.valueTime = valueTime;
         }
 
         Map<String, String> getValueMap() {
@@ -70,6 +77,10 @@ public class SpringPropertyDemo {
 
         List<String> getValueList() {
             return valueList;
+        }
+
+        LocalTime getValueTime() {
+            return valueTime;
         }
     }
 }
