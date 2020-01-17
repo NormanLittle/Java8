@@ -1,4 +1,4 @@
-package com.sandbox.iterator;
+package com.sandbox;
 
 import java.util.Iterator;
 import java.util.Set;

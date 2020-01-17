@@ -1,4 +1,4 @@
-package com.sandbox.interview;
+package com.sandbox;
 
 import java.util.regex.Pattern;
 
