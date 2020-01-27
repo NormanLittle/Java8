@@ -9,7 +9,7 @@ import static com.google.common.io.Resources.getResource;
 import static com.google.common.io.Resources.toByteArray;
 import static org.junit.Assert.assertEquals;
 
-public class HttpContentTypeFactoryTest {
+public class MediaTypeDemoTest {
 
     private static final String JPEG = "image.jpg";
     private static final String PNG = "image.png";
