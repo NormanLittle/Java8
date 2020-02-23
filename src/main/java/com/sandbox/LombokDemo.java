@@ -3,39 +3,59 @@ package com.sandbox;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.IOException;
 
+import static com.sandbox.LombokDemo.ImmutableFoo.anImmutableFoo;
+import static lombok.AccessLevel.PRIVATE;
+
 public class LombokDemo {
 
-    public static void main(String[] args) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-        Order before = new Order("VR123456789", 1);
-        System.out.println("Before: " + before);
+    private static <T> void testSerialization(T t, Class<T> clazz) throws IOException {
+        System.out.println("Before: " + t);
 
-        String json = objectMapper.writeValueAsString(before);
+        String json = objectMapper.writeValueAsString(t);
         System.out.println(json);
 
-        Order after = objectMapper.readValue(json, Order.class);
+        T after = objectMapper.readValue(json, clazz);
         System.out.println("After: " + after);
     }
 
+    public static void main(String[] args) throws IOException {
+        ImmutableFoo immutableFoo = anImmutableFoo(1, "One");
+        testSerialization(immutableFoo, ImmutableFoo.class);
+
+        MutableFoo mutableFoo = new MutableFoo();
+        mutableFoo.setId(2);
+        mutableFoo.setName("Two");
+        testSerialization(mutableFoo, MutableFoo.class);
+    }
+
+    @AllArgsConstructor(access = PRIVATE)
     @Getter
     @EqualsAndHashCode
     @ToString
-    private static class Order {
-        private final String id;
-        private final int quantity;
+    public static class ImmutableFoo {
+        private final int id;
+        private final String name;
 
         @JsonCreator
-        private Order(@JsonProperty("id") String id,
-                      @JsonProperty("quantity") int quantity) {
-            this.id = id;
-            this.quantity = quantity;
+        public static ImmutableFoo anImmutableFoo(@JsonProperty("id") int id,
+                                                  @JsonProperty("name") String name) {
+            return new ImmutableFoo(id, name);
         }
+    }
+
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    @EqualsAndHashCode
+    @ToString
+    public static class MutableFoo {
+        private int id;
+        private String name;
     }
 }
